@@ -12,39 +12,45 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
+        ('api_account', '0001_initial'),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Role',
+            name='Insurance',
             fields=[
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('is_activate', models.BooleanField(default=True)),
+                ('code', models.CharField(max_length=30)),
                 ('name', models.CharField(max_length=50)),
+                ('expired_date', models.DateField()),
+                ('created_date', models.DateField()),
             ],
             options={
-                'db_table': 'role',
+                'db_table': 'insurance',
+                'ordering': ('created_at',),
             },
         ),
         migrations.CreateModel(
-            name='Account',
+            name='User',
             fields=[
-                ('last_login', models.DateTimeField(blank=True, null=True, verbose_name='last login')),
                 ('id', models.UUIDField(default=uuid.uuid4, editable=False, primary_key=True, serialize=False)),
                 ('created_at', models.DateTimeField(default=django.utils.timezone.now)),
                 ('updated_at', models.DateTimeField(auto_now=True)),
                 ('is_activate', models.BooleanField(default=True)),
-                ('username', models.CharField(max_length=30, unique=True)),
-                ('email', models.EmailField(blank=True, max_length=254, null=True, unique=True)),
-                ('password', models.CharField(max_length=200)),
-                ('avatar', models.CharField(blank=True, max_length=200, null=True)),
-                ('is_active', models.BooleanField(default=True)),
-                ('role', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api_account.role')),
+                ('first_name', models.CharField(max_length=50)),
+                ('last_name', models.CharField(max_length=50)),
+                ('phone', models.CharField(blank=True, max_length=20, null=True)),
+                ('birthday', models.DateField(blank=True, null=True)),
+                ('gender', models.CharField(max_length=10)),
+                ('career', models.CharField(blank=True, max_length=20, null=True)),
+                ('account', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='api_account.account')),
+                ('insurance', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.SET_NULL, to='api_user.insurance')),
             ],
             options={
-                'db_table': 'account',
+                'db_table': 'user',
                 'ordering': ('created_at',),
             },
             managers=[

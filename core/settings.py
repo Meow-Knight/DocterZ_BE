@@ -47,6 +47,7 @@ INSTALLED_APPS = [
 
     'api_base',
     'api_account',
+    'api_user',
 ]
 
 MIDDLEWARE = [
@@ -57,6 +58,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'api_base.middleware.CommonMiddlewareAppendSlashWithoutRedirect',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -122,16 +124,16 @@ SIMPLE_JWT = {
 # https://docs.djangoproject.com/en/3.2/ref/settings/#databases
 
 DATABASES = {
-
     'default': {
-        'ENGINE': 'djongo',
-        "CLIENT": {
-           "name": os.getenv('DB_NAME'),
-           "host": os.getenv('DB_STRING_CONNECTION'),
-           "username": os.getenv('DB_USER'),
-           "password": os.getenv('DB_PASSWORD'),
-           "authMechanism": "SCRAM-SHA-1",
-        },
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': os.getenv('DB_NAME'),
+        'USER': os.getenv('DB_USER'),
+        'PASSWORD': os.getenv('DB_PASSWORD'),
+        'HOST': os.getenv('DB_HOST'),
+        'PORT': os.getenv('DB_PORT'),
+        'OPTIONS': {
+            'init_command': "SET sql_mode='STRICT_TRANS_TABLES'"
+        }
     }
 }
 
