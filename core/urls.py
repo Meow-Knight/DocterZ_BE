@@ -24,4 +24,5 @@ urlpatterns = [
     url(r"api/v1/base/", include('api_base.urls')),
     url(r"api/v1/user/", include('api_user.urls')),
     url(r"api/v1/account/", include('api_account.urls')),
+    url(r"api/v1/doctor/", include('api_doctor.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
