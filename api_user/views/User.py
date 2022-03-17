@@ -3,7 +3,7 @@ from rest_framework.decorators import action
 from rest_framework.response import Response
 
 from api_account.constants import RoleData
-from api_account.permissions import UserPermission
+from api_account.permissions import UserPermission, AdminPermission
 from api_account.services import AccountService
 from api_base.views import BaseViewSet
 from api_user.models import User
@@ -17,7 +17,7 @@ class UserViewSet(BaseViewSet):
     permission_classes = [UserPermission]
     permission_map = {
         "login": [],
-        "signup": []
+        "signup": [AdminPermission]
     }
 
     @action(detail=False, methods=['post'])

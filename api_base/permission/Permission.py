@@ -11,6 +11,6 @@ class MyBasePermission(BasePermission):
             return True
 
         for role in self.match_any_roles:
-            if request.user.role == role.value:
+            if request.user.role.id.hex == role.value.get('id'):
                 return True
         return False
