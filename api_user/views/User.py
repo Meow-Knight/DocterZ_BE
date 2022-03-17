@@ -17,7 +17,7 @@ class UserViewSet(BaseViewSet):
     permission_classes = [UserPermission]
     permission_map = {
         "login": [],
-        "signup": [AdminPermission]
+        "signup": []
     }
 
     @action(detail=False, methods=['post'])

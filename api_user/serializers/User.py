@@ -14,14 +14,15 @@ class FullUserSerializer(serializers.ModelSerializer):
 
 
 class RegisterUserSerializer(serializers.ModelSerializer):
-    insurance = InsuranceSerializer()
+    insurance = InsuranceSerializer(required=False)
 
     class Meta:
         model = User
         fields = '__all__'
 
     def create(self, validated_data):
-        insurance_data = validated_data.pop("insurance")
-        insurance = Insurance.objects.create(**insurance_data)
-        validated_data['insurance'] = insurance
+        insurance_data = validated_data.get("insurance")
+        if insurance_data:
+            insurance = Insurance.objects.create(**insurance_data)
+            validated_data['insurance'] = insurance
         return super().create(validated_data)

@@ -35,7 +35,6 @@ class AccountService:
             if check_password(password, account.password):
                 token = RefreshToken.for_user(account)
                 return {'id': account.id,
-                        'email': account.email,
                         'role': account.role.name,
                         'access_token': str(token.access_token),
                         'refresh_token': str(token)}
