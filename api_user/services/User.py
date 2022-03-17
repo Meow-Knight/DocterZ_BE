@@ -3,6 +3,7 @@ from rest_framework.exceptions import ValidationError
 
 
 from api_account.constants import RoleData
+from api_account.serializers import AccountSerializer
 from api_account.services import AccountService
 from api_user.serializers import RegisterUserSerializer
 
@@ -12,11 +13,13 @@ class UserService:
     @transaction.atomic
     def signup(cls, request):
         user_data = request.data
-        if not user_data.get('account'):
-            raise ValidationError({"detail": "account field is required"})
-        user_data.get('account')['role'] = RoleData.USER.value.get('id')
+        account_serializer = AccountSerializer(data=user_data)
+        user_data['role'] = RoleData.USER.value.get('id')
+        if account_serializer.is_valid(raise_exception=True):
+            account = account_serializer.save()
+            user_data['account'] = account.id.hex
         serializer = RegisterUserSerializer(data=user_data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-            return AccountService.login_with_username_password(user_data['account']['username'],
-                                                               user_data['account']['password'])
+            return AccountService.login_with_username_password(user_data['username'],
+                                                               user_data['password'])

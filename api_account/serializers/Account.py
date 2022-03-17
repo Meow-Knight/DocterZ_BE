@@ -12,7 +12,7 @@ class AccountSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         password = validated_data.get('password')
         password = make_password(password)
-        validated_data[password] = password
+        validated_data['password'] = password
         return super().create(validated_data)
 
 

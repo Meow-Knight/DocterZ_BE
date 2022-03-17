@@ -14,7 +14,6 @@ class FullUserSerializer(serializers.ModelSerializer):
 
 
 class RegisterUserSerializer(serializers.ModelSerializer):
-    account = AccountSerializer()
     insurance = InsuranceSerializer()
 
     class Meta:
@@ -22,9 +21,7 @@ class RegisterUserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
     def create(self, validated_data):
-        account_data = validated_data.pop("account")
         insurance_data = validated_data.pop("insurance")
-        account = AccountService.create_account(account_data)
-        Insurance.objects.create(**insurance_data)
-        validated_data['account'] = account
+        insurance = Insurance.objects.create(**insurance_data)
+        validated_data['insurance'] = insurance
         return super().create(validated_data)
