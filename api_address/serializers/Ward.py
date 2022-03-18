@@ -1,8 +1,7 @@
 from rest_framework import serializers
 
-from api_doctor.models.District import District
-from api_doctor.models.Ward import Ward
-from api_doctor.serializers.District import DistrictSerializer
+from api_address.models.Ward import Ward
+from api_address.serializers.District import DistrictSerializer
 
 
 class FullAddressSerializer(serializers.ModelSerializer):

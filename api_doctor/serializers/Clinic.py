@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from api_doctor.models import Clinic
-from api_doctor.serializers.Ward import FullAddressSerializer
+from api_address.serializers import FullAddressSerializer
 
 
 class ClinicSerializer(serializers.ModelSerializer):

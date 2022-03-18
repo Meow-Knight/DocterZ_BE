@@ -3,10 +3,10 @@ from django.db import models
 
 from api_account.models import Account
 from api_base.models import TimeStampedModel
-from api_doctor.models.Clinic import Clinic
-from api_doctor.models.Department import Department
-from api_doctor.models.Hospital import Hospital
-from api_doctor.models.Ward import Ward
+from api_doctor.models import Clinic
+from api_doctor.models import Department
+from api_doctor.models import Hospital
+from api_address.models import Ward
 
 
 class Doctor(TimeStampedModel):
@@ -17,12 +17,13 @@ class Doctor(TimeStampedModel):
     birthday = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=10)
     email = models.EmailField(null=True, blank=True)
-    address = models.ForeignKey(Ward, on_delete=models.SET_NULL, null=True, related_name="doctor")
+    detail_address = models.CharField(max_length=200, null=True, blank=True)
+    ward = models.ForeignKey(Ward, on_delete=models.SET_NULL, null=True, related_name="doctor")
     hospital = models.ForeignKey(Hospital, on_delete=models.SET_NULL, null=True, related_name="doctor")
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, related_name="doctor")
     clinic = models.ForeignKey(Clinic, on_delete=models.SET_NULL, null=True, related_name="doctor")
     joined_date = models.DateField(null=True, blank=True)
-    certificate = models.CharField(max_length=200, null=True, blank=True)
+    certificate = models.CharField(max_length=50, null=True, blank=True)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
 
     class Meta:

@@ -2,12 +2,10 @@ from rest_framework import serializers
 
 from api_account.serializers import AccountSerializer
 from api_account.services import AccountService
-from api_doctor.models import Clinic
-from api_doctor.models.Department import Department
 from api_doctor.models.Doctor import Doctor
 from api_doctor.serializers import ClinicSerializer
 from api_doctor.serializers.Hospital import HospitalSerializer
-from api_doctor.serializers.Ward import FullAddressSerializer
+from api_address.serializers import FullAddressSerializer
 
 
 class DoctorSerializer(serializers.ModelSerializer):

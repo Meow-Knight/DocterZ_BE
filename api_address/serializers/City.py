@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from api_doctor.models.City import City
+from api_address.models.City import City
 
 
 class CitySerializer(serializers.ModelSerializer):
