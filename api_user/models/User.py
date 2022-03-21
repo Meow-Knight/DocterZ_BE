@@ -8,8 +8,7 @@ from api_user.models import Insurance
 
 class User(TimeStampedModel):
     objects = UserManager()
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    name = models.CharField(max_length=100)
     phone = models.CharField(max_length=20, null=True, blank=True)
     birthday = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=10)
