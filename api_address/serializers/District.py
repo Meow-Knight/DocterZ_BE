@@ -9,4 +9,4 @@ class DistrictSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = District
-        fields = ('id', 'code', 'name', 'city')
+        fields = '__all__'

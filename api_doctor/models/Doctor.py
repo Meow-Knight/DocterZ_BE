@@ -11,8 +11,7 @@ from api_address.models import Ward
 
 class Doctor(TimeStampedModel):
     objects = UserManager()
-    first_name = models.CharField(max_length=50)
-    last_name = models.CharField(max_length=50)
+    full_name = models.CharField(max_length=50)
     phone = models.CharField(max_length=20, null=True, blank=True)
     birthday = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=10)

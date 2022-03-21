@@ -5,9 +5,16 @@ from api_address.serializers import FullAddressSerializer
 
 
 class HospitalSerializer(serializers.ModelSerializer):
-    address = FullAddressSerializer()
+    ward = FullAddressSerializer()
 
     class Meta:
         model = Hospital
         fields = '__all__'
         depth = 1
+
+
+class HospitalCUDSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Hospital
+        fields = '__all__'
