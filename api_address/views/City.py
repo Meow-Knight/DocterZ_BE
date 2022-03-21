@@ -11,7 +11,7 @@ from api_base.views import BaseViewSet
 class CityViewSet(BaseViewSet):
     queryset = City.objects.all()
     serializer_class = CitySerializer
-    permission_classes = AdminPermission
+    permission_classes = []
     permission_map = {
         "get_all": []
     }

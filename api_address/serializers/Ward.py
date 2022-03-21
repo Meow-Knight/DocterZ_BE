@@ -4,6 +4,14 @@ from api_address.models.Ward import Ward
 from api_address.serializers.District import DistrictSerializer
 
 
+class WardSerializer(serializers.ModelSerializer):
+    district = DistrictSerializer()
+
+    class Meta:
+        model = Ward
+        fields = '__all__'
+
+
 class FullAddressSerializer(serializers.ModelSerializer):
     district = DistrictSerializer()
 
@@ -11,17 +19,14 @@ class FullAddressSerializer(serializers.ModelSerializer):
         data = super(FullAddressSerializer, self).to_representation(instance)
         res_data = dict()
         res_data['ward'] = {
-            "id": data['id'],
             "code": data['code'],
             "name": data['name']
         }
         res_data['district'] = {
-            "id": data['district']['id'],
             "code": data['district']['code'],
             "name": data['district']['name']
         }
         res_data['city'] = {
-            "id": data['district']['city']['id'],
             "code": data['district']['city']['code'],
             "name": data['district']['city']['name']
         }
@@ -29,4 +34,4 @@ class FullAddressSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Ward
-        fields = ('id', 'code', 'name', 'district')
+        fields = '__all__'

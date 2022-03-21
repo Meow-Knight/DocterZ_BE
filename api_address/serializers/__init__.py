@@ -1,3 +1,3 @@
 from .City import CitySerializer
 from .District import DistrictSerializer
-from .Ward import FullAddressSerializer
+from .Ward import FullAddressSerializer, WardSerializer
