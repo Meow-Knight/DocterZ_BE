@@ -1,6 +1,6 @@
 # source python env
 echo ">>>>>>Sourcing python env..."
-source "env/bin/activate"
+source env/bin/activate
 
 # install requirements
 pip install -r requirements.txt
