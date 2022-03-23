@@ -1,6 +1,6 @@
 echo ">>>>>>Starting deploy<<<<<<"
 echo ">>>>>>Create virtual env..."
-python -m venv env
+python3 -m venv env
 
 # source python env
 echo ">>>>>>Sourcing python env..."
