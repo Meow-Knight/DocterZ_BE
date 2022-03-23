@@ -1,3 +1,7 @@
+echo ">>>>>>Starting deploy<<<<<<"
+echo ">>>>>>Create virtual env..."
+python -m venv env
+
 # source python env
 echo ">>>>>>Sourcing python env..."
 source env/bin/activate
