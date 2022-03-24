@@ -1,6 +1,9 @@
 #!/bin/bash
 
 echo ">>>>>>Starting deploy<<<<<<"
+
+echo ">>>>>>Stopping port running server before..."
+kill -9 `sudo lsof -t -i:8000`
 echo ">>>>>>Create virtual env..."
 python3 -m venv env
 
@@ -15,9 +18,6 @@ pip install -r requirements.txt
 echo "Migrate model..."
 python manage.py migrate
 
-# run tests
+# run server
 echo "Run server..."
-gunicorn core.wsgi:application \
-    --bind 0.0.0.0:8000 \
-    --workers 3 \
-    --daemon
+nohup python manage.py runserver 0:8000 > my.log 2>&1 &
