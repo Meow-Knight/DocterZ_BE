@@ -32,9 +32,12 @@ class AccountViewSet(BaseViewSet):
                 return Response({"detail": "This account is deactivated"}, status=status.HTTP_400_BAD_REQUEST)
             if check_password(password, account.password):
                 token = RefreshToken.for_user(account)
-                response = {'email': account.email,
-                            'role': account.role.name,
-                            'access_token': str(token.access_token),
-                            'refresh_token': str(token)}
+                response = {
+                    'id': str(account.id),
+                    'email': account.email,
+                    'role': account.role.name,
+                    'access_token': str(token.access_token),
+                    'refresh_token': str(token)
+                }
                 return Response(response)
         return Response({"details": "Invalid username/password"}, status=status.HTTP_400_BAD_REQUEST)
