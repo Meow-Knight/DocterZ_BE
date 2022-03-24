@@ -20,4 +20,4 @@ python manage.py migrate
 
 # run server
 echo "Run server..."
-nohup python manage.py runserver 0:8000 > my.log 2>&1 &
+JENKINS_NODE_COOKIE=dontKillMe nohup python manage.py runserver 0:8000 > my.log 2>&1 &
