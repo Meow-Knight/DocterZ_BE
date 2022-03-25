@@ -1,7 +1,7 @@
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from api_account.permissions import DoctorPermission, AdminPermission
+from api_account.permissions import DoctorPermission, AdminPermission, DoctorOrAdminPermission
 from api_base.views import BaseViewSet
 from api_doctor.models.Doctor import Doctor
 from api_doctor.serializers import DoctorSerializer
@@ -15,11 +15,12 @@ class DoctorViewSet(BaseViewSet):
     permission_map = {
         "signup": [AdminPermission],
         "login": [],
+        "update": [DoctorOrAdminPermission]
     }
 
     @action(detail=False, methods=['post'], url_path='signup')
     def signup(self, request, *args, **kwargs):
         response_data = DoctorService.signup(request)
-        res_data = {"message": "Register Successfully", "profile": response_data}
+        res_data = {"message": "Đăng ký thành công", "profile": response_data}
         return Response(res_data, status=status.HTTP_201_CREATED)
 
