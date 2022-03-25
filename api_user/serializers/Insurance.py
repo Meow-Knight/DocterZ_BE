@@ -7,4 +7,4 @@ class InsuranceSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Insurance
-        fields = '__all__'
+        fields = ['code', 'name', 'expired_date', 'created_date']

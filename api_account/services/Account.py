@@ -1,8 +1,11 @@
+import os
+
 from django.contrib.auth.hashers import make_password, check_password
 from dotenv import load_dotenv
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from api_account.models import Account
+from api_base.services import CloudinaryService
 
 load_dotenv()
 
@@ -47,3 +50,12 @@ class AccountService:
             return None
         account_data['password'] = make_password(password)
         return Account.objects.create(**account_data)
+
+    @classmethod
+    def upload_avatar(cls, image):
+        upload_data = CloudinaryService.upload_image(image, os.getenv('CLOUDINARY_AVATAR_USER_FOLDER'))
+        return upload_data.get("url")
+
+    @classmethod
+    def delete_avatar(cls, image):
+        return CloudinaryService.delete_image(image, os.getenv('CLOUDINARY_AVATAR_USER_FOLDER'))

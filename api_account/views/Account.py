@@ -34,7 +34,6 @@ class AccountViewSet(BaseViewSet):
                 token = RefreshToken.for_user(account)
                 response = {
                     'id': str(account.id),
-                    'email': account.email,
                     'role': account.role.name,
                     'access_token': str(token.access_token),
                     'refresh_token': str(token)
