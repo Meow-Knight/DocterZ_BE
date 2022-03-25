@@ -5,14 +5,14 @@ from api_address.serializers import FullAddressSerializer
 
 
 class ClinicSerializer(serializers.ModelSerializer):
-    address = FullAddressSerializer()
+    ward = FullAddressSerializer(required=False)
 
     class Meta:
         model = Clinic
         fields = '__all__'
 
 
-class ClinicRegisterSerializer(serializers.ModelSerializer):
+class ClinicCUDSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Clinic
