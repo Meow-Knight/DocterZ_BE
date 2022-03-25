@@ -60,6 +60,9 @@ INSTALLED_APPS = [
     'api_address',
 
     'django_jenkins',
+
+    # swagger
+    'drf_yasg',
 ]
 
 MIDDLEWARE = [
