@@ -45,6 +45,7 @@ urlpatterns = [
     url(r"api/v1/base/", include('api_base.urls')),
     url(r"api/v1/user/", include('api_user.urls')),
     url(r"api/v1/account/", include('api_account.urls')),
+    url(r"api/v1/admin/", include('api_admin.urls')),
     url(r"api/v1/", include('api_doctor.urls')),
     url(r"api/v1/address/", include('api_address.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
