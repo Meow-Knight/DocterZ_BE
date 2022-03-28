@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from api_account.permissions import AdminPermission
 from api_base.views import BaseViewSet
 from api_doctor.models import Doctor
+from api_doctor.serializers import DoctorSerializer, EditDoctorProfileSerializer
 from api_user.models import User
 
 
@@ -14,6 +15,9 @@ class AdminViewSet(BaseViewSet):
     serializer_class = None
     permission_classes = [AdminPermission]
     permission_map = {
+    }
+    serializer_map = {
+        "edit_doctor_profile": EditDoctorProfileSerializer
     }
 
     @action(detail=False, methods=['put'])
@@ -42,7 +46,7 @@ class AdminViewSet(BaseViewSet):
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response({"detail": "user id không hợp lệ"}, status=status.HTTP_400_BAD_REQUEST)
 
-    @action(detail=False, methods=['put'])
+    @action(detail=True, methods=['put'])
     def deactivate_doctor(self, request, *args, **kwargs):
         doctor_id = request.query_params.get('doctor_id')
         doctor = Doctor.objects.filter(id=doctor_id)
@@ -58,7 +62,7 @@ class AdminViewSet(BaseViewSet):
     @action(detail=False, methods=['put'])
     def activate_doctor(self, request, *args, **kwargs):
         doctor_id = request.query_params.get('doctor_id')
-        doctor = User.objects.filter(id=doctor_id)
+        doctor = Doctor.objects.filter(id=doctor_id)
         if doctor.exists():
             doctor = doctor.first()
             doctor.is_activate = True
@@ -67,3 +71,18 @@ class AdminViewSet(BaseViewSet):
             doctor.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
         return Response({"detail": "doctor id không hợp lệ"}, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(methods=['put'], detail=False)
+    def edit_doctor_profile(self, request, *args, **kwargs):
+        doctor_id = request.query_params.get('doctor_id')
+        data = request.data
+        doctor = Doctor.objects.filter(pk=doctor_id)
+        if doctor.exists():
+            doctor = doctor.first()
+            serializer = self.get_serializer(doctor, data=data, partial=True)
+            if serializer.is_valid(raise_exception=True):
+                doctor = serializer.save()
+                res_data = DoctorSerializer(doctor)
+                return Response(res_data.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"detail": "doctor id không hợp lệ"}, status=status.HTTP_400_BAD_REQUEST)

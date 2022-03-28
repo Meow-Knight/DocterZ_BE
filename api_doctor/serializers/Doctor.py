@@ -13,6 +13,31 @@ class DoctorSerializer(serializers.ModelSerializer):
     ward = FullAddressSerializer(required=False)
     hospital = HospitalSerializer(required=False)
     clinic = ClinicSerializer(required=False)
+
+    class Meta:
+        model = Doctor
+        fields = '__all__'
+        depth = 1
+
+
+class RegisterDoctorSerializer(serializers.ModelSerializer):
+    account = AccountSerializer()
+
+    def create(self, validated_data):
+        account_data = validated_data.pop("account")
+        if validated_data.get("email") is not None:
+            account_data["email"] = validated_data.get("email")
+        account = AccountService.create_account(account_data)
+        validated_data['account'] = account
+        return super().create(validated_data)
+
+    class Meta:
+        model = Doctor
+        fields = '__all__'
+
+
+class EditDoctorProfileSerializer(serializers.ModelSerializer):
+    clinic = ClinicCUDSerializer(required=False)
     avatar = serializers.ImageField(required=False)
 
     @transaction.atomic
@@ -32,23 +57,6 @@ class DoctorSerializer(serializers.ModelSerializer):
             account.avatar = avatar_link
             account.save()
         return super().update(instance, validated_data)
-
-    class Meta:
-        model = Doctor
-        fields = '__all__'
-        depth = 1
-
-
-class RegisterDoctorSerializer(serializers.ModelSerializer):
-    account = AccountSerializer()
-
-    def create(self, validated_data):
-        account_data = validated_data.pop("account")
-        if validated_data.get("email") is not None:
-            account_data["email"] = validated_data.get("email")
-        account = AccountService.create_account(account_data)
-        validated_data['account'] = account
-        return super().create(validated_data)
 
     class Meta:
         model = Doctor
