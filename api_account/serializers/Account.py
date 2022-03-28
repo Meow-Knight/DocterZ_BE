@@ -23,6 +23,8 @@ class UpdateGeneralAccountSerializer(serializers.ModelSerializer):
 
 
 class GeneralInfoAccountSerializer(serializers.ModelSerializer):
+    role = serializers.CharField(source='role.name')
+
     class Meta:
         model = Account
-        exclude = ('password', 'last_login',)
+        fields = ['id', 'username', 'email', 'avatar', 'role', 'is_active']

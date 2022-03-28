@@ -18,8 +18,7 @@ class UserService:
         if account_serializer.is_valid(raise_exception=True):
             account = account_serializer.save()
             user_data['account'] = account.id.hex
-        serializer = RegisterUserSerializer(data=user_data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return AccountService.login_with_username_password(user_data['username'],
-                                                               user_data['password'])
+            serializer = RegisterUserSerializer(data=user_data)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save()
+                return AccountService.get_login_info(account)

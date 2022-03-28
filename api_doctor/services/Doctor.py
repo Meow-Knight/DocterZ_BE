@@ -1,5 +1,4 @@
 from django.db import transaction
-from rest_framework.exceptions import ValidationError
 
 from api_account.constants import RoleData
 from api_account.services import AccountService
@@ -20,6 +19,5 @@ class DoctorService:
                 user_data['clinic'] = clinic_serializer.save().pk
         serializer = RegisterDoctorSerializer(data=user_data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return AccountService.login_with_username_password(user_data['account']['username'],
-                                                               user_data['account']['password'])
+            doctor = serializer.save()
+            return AccountService.get_login_info(doctor.account)

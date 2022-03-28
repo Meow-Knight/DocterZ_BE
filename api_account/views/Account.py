@@ -7,6 +7,7 @@ from rest_framework_simplejwt.tokens import RefreshToken
 
 from api_account.models import Account
 from api_account.serializers import AccountSerializer
+from api_account.services import AccountService
 from api_base.views import BaseViewSet
 
 
@@ -31,12 +32,6 @@ class AccountViewSet(BaseViewSet):
             if not account.is_active:
                 return Response({"detail": "This account is deactivated"}, status=status.HTTP_400_BAD_REQUEST)
             if check_password(password, account.password):
-                token = RefreshToken.for_user(account)
-                response = {
-                    'id': str(account.id),
-                    'role': account.role.name,
-                    'access_token': str(token.access_token),
-                    'refresh_token': str(token)
-                }
-                return Response(response)
+                response_data = AccountService.get_login_info(account)
+                return Response(response_data)
         return Response({"details": "Invalid username/password"}, status=status.HTTP_400_BAD_REQUEST)

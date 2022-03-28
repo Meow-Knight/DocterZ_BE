@@ -4,8 +4,12 @@ from django.contrib.auth.hashers import make_password, check_password
 from dotenv import load_dotenv
 from rest_framework_simplejwt.tokens import RefreshToken
 
+from api_account.constants import RoleData
 from api_account.models import Account
+from api_account.serializers import GeneralInfoAccountSerializer
 from api_base.services import CloudinaryService
+from api_doctor.models import Doctor
+from api_user.models import User
 
 load_dotenv()
 
@@ -59,3 +63,29 @@ class AccountService:
     @classmethod
     def delete_avatar(cls, image):
         return CloudinaryService.delete_image(image, os.getenv('CLOUDINARY_AVATAR_USER_FOLDER'))
+
+    @classmethod
+    def get_info(cls, account):
+        from api_user.serializers import GeneralInfoUserSerializer
+        from api_doctor.serializers import GeneralInfoDoctorSerializer
+
+        role = account.role
+        if role.id.hex == RoleData.USER.value.get('id'):
+            user = User.objects.get(account=account)
+            return GeneralInfoUserSerializer(user).data
+        if role.id.hex == RoleData.DOCTOR.value.get('id'):
+            doctor = Doctor.objects.get(account=account)
+            return GeneralInfoDoctorSerializer(doctor).data
+        return {"account": GeneralInfoAccountSerializer(account).data}
+
+    @classmethod
+    def get_login_info(cls, account):
+        token = RefreshToken.for_user(account)
+        account_info = cls.get_info(account)
+        return {
+            'id': str(account.id),
+            'role': account.role.name,
+            'access_token': str(token.access_token),
+            'refresh_token': str(token),
+            'info': account_info
+        }

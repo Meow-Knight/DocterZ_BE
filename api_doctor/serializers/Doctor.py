@@ -1,14 +1,12 @@
 from django.db import transaction
 from rest_framework import serializers
 
-from api_account.models import Account
-from api_account.serializers import AccountSerializer
+from api_account.serializers import AccountSerializer, GeneralInfoAccountSerializer
 from api_account.services import AccountService
-from api_doctor.models import Clinic
+from api_address.serializers import FullAddressSerializer
 from api_doctor.models.Doctor import Doctor
 from api_doctor.serializers import ClinicSerializer, ClinicCUDSerializer
 from api_doctor.serializers.Hospital import HospitalSerializer
-from api_address.serializers import FullAddressSerializer
 
 
 class DoctorSerializer(serializers.ModelSerializer):
@@ -51,6 +49,14 @@ class RegisterDoctorSerializer(serializers.ModelSerializer):
         account = AccountService.create_account(account_data)
         validated_data['account'] = account
         return super().create(validated_data)
+
+    class Meta:
+        model = Doctor
+        fields = '__all__'
+
+
+class GeneralInfoDoctorSerializer(serializers.ModelSerializer):
+    account = GeneralInfoAccountSerializer()
 
     class Meta:
         model = Doctor

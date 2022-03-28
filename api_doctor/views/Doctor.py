@@ -21,8 +21,7 @@ class DoctorViewSet(BaseViewSet):
     @action(detail=False, methods=['post'], url_path='signup')
     def signup(self, request, *args, **kwargs):
         response_data = DoctorService.signup(request)
-        res_data = {"message": "Đăng ký thành công", "data": response_data}
-        return Response(res_data, status=status.HTTP_201_CREATED)
+        return Response(response_data, status=status.HTTP_201_CREATED)
 
     @action(methods=['put'], detail=False)
     def edit_own_profile(self, request, *args, **kwargs):

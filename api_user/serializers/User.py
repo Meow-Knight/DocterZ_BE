@@ -1,12 +1,21 @@
 from django.db import transaction
 from rest_framework import serializers
 
+from api_account.serializers import GeneralInfoAccountSerializer
 from api_account.services import AccountService
 from api_user.models import User, Insurance
 from api_user.serializers import InsuranceSerializer
 
 
 class FullUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = '__all__'
+
+
+class GeneralInfoUserSerializer(serializers.ModelSerializer):
+    account = GeneralInfoAccountSerializer()
 
     class Meta:
         model = User
