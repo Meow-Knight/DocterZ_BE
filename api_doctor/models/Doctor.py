@@ -22,7 +22,6 @@ class Doctor(TimeStampedModel):
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, related_name="doctor")
     clinic = models.ForeignKey(Clinic, on_delete=models.SET_NULL, null=True, related_name="doctor")
     joined_date = models.DateField(null=True, blank=True)
-    certificate = models.CharField(max_length=50, null=True, blank=True)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
 
     class Meta:
