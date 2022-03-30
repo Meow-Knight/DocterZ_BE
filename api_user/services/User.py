@@ -1,6 +1,4 @@
 from django.db import transaction
-from rest_framework.exceptions import ValidationError
-
 
 from api_account.constants import RoleData
 from api_account.serializers import AccountSerializer

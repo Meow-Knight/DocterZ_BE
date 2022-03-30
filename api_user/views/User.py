@@ -41,5 +41,7 @@ class UserViewSet(BaseViewSet):
             request_data['insurance'] = insurance_data
         serializer = self.get_serializer(user, data=request_data, partial=True)
         if serializer.is_valid(raise_exception=True):
-            serializer.save()
-            return Response(serializer.data)
+            user = serializer.save()
+            response_data = serializer.data
+            response_data['avatar'] = user.account.avatar
+            return Response(response_data)
