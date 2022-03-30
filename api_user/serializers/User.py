@@ -51,9 +51,15 @@ class EditUserSerializer(serializers.ModelSerializer):
         avatar = validated_data.get('avatar')
         if insurance_data:
             validated_data.pop('insurance')
-            insurance_serializer = InsuranceSerializer(instance.insurance, data=insurance_data, partial=True)
-            if insurance_serializer.is_valid(raise_exception=True):
-                insurance_serializer.save()
+            if not instance.insurance:
+                insurance_serializer = InsuranceSerializer(data=insurance_data)
+                if insurance_serializer.is_valid(raise_exception=True):
+                    insurance = insurance_serializer.save()
+                    validated_data['insurance'] = insurance
+            else:
+                insurance_serializer = InsuranceSerializer(instance.insurance, data=insurance_data, partial=True)
+                if insurance_serializer.is_valid(raise_exception=True):
+                    insurance_serializer.save()
         if avatar:
             validated_data.pop('avatar')
             account = instance.account

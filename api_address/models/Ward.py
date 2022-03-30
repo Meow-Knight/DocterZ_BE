@@ -12,3 +12,7 @@ class Ward(models.Model):
     class Meta:
         db_table = "ward"
         ordering = ('name',)
+
+    def get_full_address(self):
+        full_detail_address = [self.name, self.district.name, self.district.city.name]
+        return ", ".join(full_detail_address)

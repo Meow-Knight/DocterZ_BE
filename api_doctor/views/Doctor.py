@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from api_account.permissions import DoctorPermission, AdminPermission, DoctorOrAdminPermission
 from api_base.views import BaseViewSet
 from api_doctor.models.Doctor import Doctor
-from api_doctor.serializers import DoctorSerializer
+from api_doctor.serializers import DoctorSerializer, ItemDoctorSerializer
 from api_doctor.services import DoctorService
 
 
@@ -16,6 +16,10 @@ class DoctorViewSet(BaseViewSet):
         "signup": [AdminPermission],
         "login": [],
         "edit_own_profile": [DoctorPermission],
+        "search": []
+    }
+    serializer_map = {
+        "search": ItemDoctorSerializer
     }
 
     @action(detail=False, methods=['post'], url_path='signup')
@@ -34,3 +38,9 @@ class DoctorViewSet(BaseViewSet):
             if serializer.is_valid(raise_exception=True):
                 serializer.save()
                 return Response(serializer.data, status=status.HTTP_200_OK)
+
+    @action(methods=['get'], detail=False)
+    def search(self, request, *args, **kwargs):
+        query_set = DoctorService.search(request)
+        self.queryset = query_set
+        return super().list(request, *args, **kwargs)

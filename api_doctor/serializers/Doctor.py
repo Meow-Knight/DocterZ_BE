@@ -61,3 +61,22 @@ class GeneralInfoDoctorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
         fields = '__all__'
+
+
+class ItemDoctorSerializer(serializers.ModelSerializer):
+    address = serializers.SerializerMethodField()
+    hospital_name = serializers.CharField(source='hospital.name')
+    department_name = serializers.CharField(source='department.name')
+    clinic_name = serializers.CharField(source='clinic.name')
+
+    class Meta:
+        model = Doctor
+        fields = ['id', 'full_name', 'gender', 'email', 'address', 'hospital_name', 'department_name', 'clinic_name']
+
+    def get_address(self, instance):
+        res = ""
+        if instance.detail_address:
+            res = instance.detail_address
+        if instance.ward:
+            res = res + instance.ward.get_full_address()
+        return res
