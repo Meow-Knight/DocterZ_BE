@@ -89,3 +89,13 @@ class AccountService:
             'refresh_token': str(token),
             'info': account_info
         }
+
+    @staticmethod
+    def change_password(account, current_password, new_password):
+        if not current_password or not new_password:
+            return False
+        if check_password(current_password, account.password):
+            account.password = make_password(new_password)
+            account.save()
+            return True
+        return False

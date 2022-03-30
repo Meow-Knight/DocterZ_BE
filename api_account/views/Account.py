@@ -17,7 +17,8 @@ class AccountViewSet(BaseViewSet):
     permission_classes = [IsAuthenticated]
     permission_map = {
         "login": [],
-        "signup": []
+        "signup": [],
+        "change_password": [IsAuthenticated]
     }
 
     @action(detail=False, methods=['post'])
@@ -35,3 +36,21 @@ class AccountViewSet(BaseViewSet):
                 response_data = AccountService.get_login_info(account)
                 return Response(response_data)
         return Response({"details": "Invalid username/password"}, status=status.HTTP_400_BAD_REQUEST)
+
+    @action(detail=False, methods=['put'])
+    def change_password(self, request):
+        current_password = request.data.get('current_password')
+        new_password = request.data.get('new_password')
+
+        if not current_password or not new_password:
+            error_response = {}
+            if not current_password:
+                error_response['current_password'] = "Trường này là bắt buộc"
+            if not new_password:
+                error_response['new_password'] = "Trường này là bắt buộc"
+            return Response(error_response, status=status.HTTP_400_BAD_REQUEST)
+
+        is_changed = AccountService.change_password(request.user, current_password, new_password)
+        if is_changed:
+            return Response({"message": "Mật khẩu đã được thay đổi"})
+        return Response({"message": "Mật khẩu hiện tại không hợp lệ"}, status=status.HTTP_400_BAD_REQUEST)
