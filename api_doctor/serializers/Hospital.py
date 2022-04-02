@@ -7,6 +7,12 @@ from api_address.serializers import FullAddressSerializer
 class HospitalSerializer(serializers.ModelSerializer):
     ward = FullAddressSerializer()
 
+    def to_representation(self, instance):
+        data = super(HospitalSerializer, self).to_representation(instance)
+        if data.get('ward') is not None:
+            data['address'] = data.pop('ward')
+        return data
+
     class Meta:
         model = Hospital
         fields = '__all__'

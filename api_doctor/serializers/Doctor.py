@@ -14,6 +14,12 @@ class DoctorSerializer(serializers.ModelSerializer):
     hospital = HospitalSerializer(required=False)
     clinic = ClinicSerializer(required=False)
 
+    def to_representation(self, instance):
+        data = super(DoctorSerializer, self).to_representation(instance)
+        if data.get('ward') is not None:
+            data['address'] = data.pop('ward')
+        return data
+
     class Meta:
         model = Doctor
         fields = '__all__'

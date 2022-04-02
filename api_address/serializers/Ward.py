@@ -17,19 +17,7 @@ class FullAddressSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super(FullAddressSerializer, self).to_representation(instance)
-        res_data = dict()
-        res_data['ward'] = {
-            "code": data['code'],
-            "name": data['name']
-        }
-        res_data['district'] = {
-            "code": data['district']['code'],
-            "name": data['district']['name']
-        }
-        res_data['city'] = {
-            "code": data['district']['city']['code'],
-            "name": data['district']['city']['name']
-        }
+        res_data = str(data['name'] + ', ' + data['district']['name'] + ', ' + data['district']['city']['name'])
         return res_data
 
     class Meta:
