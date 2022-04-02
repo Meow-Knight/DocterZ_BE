@@ -6,6 +6,8 @@ from rest_framework.response import Response
 
 from api_account.permissions import UserPermission
 from api_base.views import BaseViewSet
+from api_doctor.models import Doctor
+from api_doctor.serializers import DoctorSerializer
 from api_user.models import User
 from api_user.serializers.User import RegisterUserSerializer, EditUserSerializer
 from api_user.services import UserService
@@ -20,7 +22,8 @@ class UserViewSet(BaseViewSet):
         "signup": []
     }
     serializer_map = {
-        "edit_own_profile": EditUserSerializer
+        "edit_own_profile": EditUserSerializer,
+        "detail_doctor": DoctorSerializer,
     }
 
     @action(detail=False, methods=['post'])
@@ -45,3 +48,13 @@ class UserViewSet(BaseViewSet):
             response_data = serializer.data
             response_data['avatar'] = user.account.avatar
             return Response(response_data)
+
+    @action(methods=['get'], detail=False)
+    def detail_doctor(self, request, *args, **kwargs):
+        doctor_id = request.query_params.get('doctor_id')
+        doctor = Doctor.objects.filter(pk=doctor_id)
+        if doctor.exists():
+            doctor = DoctorSerializer(doctor.first())
+            return Response(doctor.data, status=status.HTTP_200_OK)
+        else:
+            return Response({"detail": "doctor id không hợp lệ"}, status=status.HTTP_400_BAD_REQUEST)

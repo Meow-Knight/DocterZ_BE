@@ -16,8 +16,7 @@ class DoctorSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super(DoctorSerializer, self).to_representation(instance)
-        if data.get('ward') is not None:
-            data['address'] = data.pop('ward')
+        data['address'] = data.pop('ward')
         return data
 
     class Meta:
@@ -52,9 +51,10 @@ class EditDoctorProfileSerializer(serializers.ModelSerializer):
         avatar_data = validated_data.get('avatar')
         if clinic_data is not None:
             validated_data.pop('clinic')
-            clinic = ClinicCUDSerializer(instance.clinic, data=clinic_data, partial=True)
+            clinic_data = ClinicCUDSerializer(clinic_data)
+            clinic = ClinicCUDSerializer(instance.clinic, data=clinic_data.data, partial=True)
             if clinic.is_valid(raise_exception=True):
-                clinic.save()
+                validated_data['clinic'] = clinic.save()
         if avatar_data is not None:
             validated_data.pop('avatar')
             account = instance.account

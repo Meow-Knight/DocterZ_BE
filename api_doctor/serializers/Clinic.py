@@ -9,8 +9,7 @@ class ClinicSerializer(serializers.ModelSerializer):
 
     def to_representation(self, instance):
         data = super(ClinicSerializer, self).to_representation(instance)
-        if data.get('ward') is not None:
-            data['address'] = data.pop('ward')
+        data['address'] = data.pop('ward')
         return data
 
     class Meta:
