@@ -51,10 +51,16 @@ class EditDoctorProfileSerializer(serializers.ModelSerializer):
         avatar_data = validated_data.get('avatar')
         if clinic_data is not None:
             validated_data.pop('clinic')
-            clinic_data = ClinicCUDSerializer(clinic_data)
-            clinic = ClinicCUDSerializer(instance.clinic, data=clinic_data.data, partial=True)
-            if clinic.is_valid(raise_exception=True):
-                validated_data['clinic'] = clinic.save()
+            if clinic_data.get('ward') is not None:
+                clinic_data['ward'] = clinic_data.get('ward').pk
+            if instance.clinic:
+                clinic = ClinicCUDSerializer(instance.clinic, data=clinic_data, partial=True)
+                if clinic.is_valid(raise_exception=True):
+                    validated_data['clinic'] = clinic.save()
+            else:
+                clinic = ClinicCUDSerializer(data=clinic_data)
+                if clinic.is_valid(raise_exception=True):
+                    validated_data['clinic'] = clinic.save()
         if avatar_data is not None:
             validated_data.pop('avatar')
             account = instance.account
