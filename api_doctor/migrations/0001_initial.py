@@ -86,7 +86,7 @@ class Migration(migrations.Migration):
                 ('gender', models.CharField(max_length=10)),
                 ('email', models.EmailField(blank=True, max_length=254, null=True)),
                 ('detail_address', models.CharField(blank=True, max_length=200, null=True)),
-                ('joined_date', models.DateField(blank=True, null=True)),
+                ('year_of_starting_work', models.IntegerField(blank=True, null=True)),
                 ('account', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL)),
                 ('clinic', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='doctor', to='api_doctor.clinic')),
                 ('department', models.ForeignKey(null=True, on_delete=django.db.models.deletion.SET_NULL, related_name='doctor', to='api_doctor.department')),

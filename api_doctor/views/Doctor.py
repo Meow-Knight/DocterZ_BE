@@ -14,7 +14,6 @@ class DoctorViewSet(BaseViewSet):
     permission_classes = []
     permission_map = {
         "signup": [AdminPermission],
-        "login": [],
         "edit_own_profile": [DoctorPermission],
         "search": []
     }
@@ -40,7 +39,6 @@ class DoctorViewSet(BaseViewSet):
                 doctor = serializer.save()
                 res_data = DoctorSerializer(doctor)
                 return Response(res_data.data, status=status.HTTP_200_OK)
-
 
     @action(methods=['get'], detail=False)
     def search(self, request, *args, **kwargs):

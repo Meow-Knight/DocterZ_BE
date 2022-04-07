@@ -22,3 +22,10 @@ class ClinicCUDSerializer(serializers.ModelSerializer):
     class Meta:
         model = Clinic
         fields = '__all__'
+
+
+class ClinicWithNameSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Clinic
+        fields = ['id', 'name']

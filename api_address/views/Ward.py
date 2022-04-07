@@ -5,6 +5,7 @@ from rest_framework.response import Response
 from api_account.permissions import AdminPermission
 from api_address.serializers import WardSerializer
 from api_address.models import District, Ward
+from api_base.services import Utils
 from api_base.views import BaseViewSet
 
 
@@ -19,6 +20,7 @@ class WardViewSet(BaseViewSet):
     @action(detail=False, methods=['get'])
     def get_by_district_id(self, request, *args, **kwargs):
         district_id = request.query_params.get('district_id', None)
+        district_id = Utils.cast_to_type_with_default_value(district_id, int, 0)
         if not district_id or not District.objects.filter(code=district_id).exists():
             return Response({"details": "Invalid city_id param in request url"}, status=status.HTTP_400_BAD_REQUEST)
         return Response(self.get_serializer(Ward.objects.filter(district_id=district_id), many=True).data,
