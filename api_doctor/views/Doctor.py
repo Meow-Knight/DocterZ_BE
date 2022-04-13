@@ -22,8 +22,7 @@ class DoctorViewSet(BaseViewSet):
         "edit_own_profile": EditDoctorProfileSerializer
     }
 
-    @action(detail=False, methods=['post'], url_path='signup')
-    def signup(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         response_data = DoctorService.signup(request)
         return Response(response_data, status=status.HTTP_201_CREATED)
 

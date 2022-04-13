@@ -26,14 +26,8 @@ class DoctorSerializer(serializers.ModelSerializer):
 
 
 class RegisterDoctorSerializer(serializers.ModelSerializer):
-    account = AccountSerializer()
 
     def create(self, validated_data):
-        account_data = validated_data.pop("account")
-        if validated_data.get("email") is not None:
-            account_data["email"] = validated_data.get("email")
-        account = AccountService.create_account(account_data)
-        validated_data['account'] = account
         return super().create(validated_data)
 
     class Meta:

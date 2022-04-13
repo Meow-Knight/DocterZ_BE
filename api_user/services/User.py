@@ -11,8 +11,8 @@ class UserService:
     @transaction.atomic
     def signup(cls, request):
         user_data = request.data
-        account_serializer = AccountSerializer(data=user_data)
         user_data['role'] = RoleData.USER.value.get('id')
+        account_serializer = AccountSerializer(data=user_data)
         if account_serializer.is_valid(raise_exception=True):
             account = account_serializer.save()
             user_data['account'] = account.id.hex
