@@ -22,6 +22,14 @@ class GeneralInfoUserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ReviewerSerializer(serializers.ModelSerializer):
+    avatar = serializers.CharField(source='account.avatar')
+
+    class Meta:
+        model = User
+        fields = ['id', 'name', 'avatar']
+
+
 class RegisterUserSerializer(serializers.ModelSerializer):
     insurance = InsuranceSerializer(required=False)
 

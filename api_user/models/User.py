@@ -12,7 +12,7 @@ class User(TimeStampedModel):
     phone = models.CharField(max_length=20, null=True, blank=True)
     birthday = models.DateField(null=True, blank=True)
     gender = models.CharField(max_length=10)
-    career = models.CharField(max_length=20, null=True, blank=True)
+    career = models.CharField(max_length=100, null=True, blank=True)
     insurance = models.ForeignKey(Insurance, on_delete=models.SET_NULL, null=True, blank=True)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
 
