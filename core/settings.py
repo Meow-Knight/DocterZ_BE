@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'api_user',
     'api_doctor',
     'api_address',
+    'api_blog',
 
     'django_jenkins',
 
