@@ -38,7 +38,6 @@ class ReviewViewSet(BaseViewSet):
         self.queryset = review_qs
         return super().list(request, *args, **kwargs)
 
-
     def create(self, request, *args, **kwargs):
         account = request.user
         user = User.objects.get(account=account)

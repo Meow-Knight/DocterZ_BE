@@ -4,7 +4,8 @@ from rest_framework.response import Response
 from api_account.permissions import DoctorPermission, AdminPermission, DoctorOrAdminPermission
 from api_base.views import BaseViewSet
 from api_doctor.models.Doctor import Doctor
-from api_doctor.serializers import DoctorSerializer, ItemDoctorSerializer, EditDoctorProfileSerializer
+from api_doctor.serializers import DoctorSerializer, ItemDoctorSerializer, EditDoctorProfileSerializer, \
+    ListDoctorSerializer
 from api_doctor.services import DoctorService
 
 
@@ -15,11 +16,14 @@ class DoctorViewSet(BaseViewSet):
     permission_map = {
         "signup": [AdminPermission],
         "edit_own_profile": [DoctorPermission],
-        "search": []
+        "search": [],
+        "get_all": [AdminPermission]
     }
     serializer_map = {
+        "list": ListDoctorSerializer,
         "search": ItemDoctorSerializer,
-        "edit_own_profile": EditDoctorProfileSerializer
+        "edit_own_profile": EditDoctorProfileSerializer,
+        "get_all": ListDoctorSerializer
     }
 
     def create(self, request, *args, **kwargs):
@@ -44,3 +48,7 @@ class DoctorViewSet(BaseViewSet):
         query_set = DoctorService.search(request)
         self.queryset = query_set
         return super().list(request, *args, **kwargs)
+
+    @action(methods=['get'], detail=False)
+    def get_all(self, request, *args, **kwargs):
+        return Response(self.get_serializer(self.queryset, many=True).data)

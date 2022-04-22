@@ -25,6 +25,27 @@ class DoctorSerializer(serializers.ModelSerializer):
         depth = 1
 
 
+class ListDoctorSerializer(serializers.ModelSerializer):
+    full_address = serializers.SerializerMethodField()
+    hospital_name = serializers.CharField(source='hospital.name')
+    department_name = serializers.CharField(source='department.name')
+    clinic_name = serializers.CharField(source='clinic.name')
+    username = serializers.CharField(source='account.username')
+
+    class Meta:
+        model = Doctor
+        fields = ['id', 'full_name', 'gender', 'email', 'full_address', 'hospital_name', 'department_name',
+                  'clinic_name', 'year_of_starting_work', 'username']
+
+    def get_full_address(self, instance):
+        res = ""
+        if instance.detail_address:
+            res = instance.detail_address
+        if instance.ward:
+            res = res + instance.ward.get_full_address()
+        return res
+
+
 class RegisterDoctorSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
