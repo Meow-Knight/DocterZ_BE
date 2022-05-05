@@ -23,3 +23,11 @@ class FullAddressSerializer(serializers.ModelSerializer):
     class Meta:
         model = Ward
         fields = '__all__'
+
+
+class DeepWardSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Ward
+        fields = '__all__'
+        depth = 3

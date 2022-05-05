@@ -5,7 +5,7 @@ from api_account.permissions import DoctorPermission, AdminPermission, DoctorOrA
 from api_base.views import BaseViewSet
 from api_doctor.models.Doctor import Doctor
 from api_doctor.serializers import DoctorSerializer, ItemDoctorSerializer, EditDoctorProfileSerializer, \
-    ListDoctorSerializer
+    ListDoctorSerializer, AdminEditDoctorSerializer
 from api_doctor.services import DoctorService
 
 
@@ -17,13 +17,15 @@ class DoctorViewSet(BaseViewSet):
         "signup": [AdminPermission],
         "edit_own_profile": [DoctorPermission],
         "search": [],
-        "get_all": [AdminPermission]
+        "get_all": [AdminPermission],
+        "update": [AdminPermission]
     }
     serializer_map = {
         "list": ListDoctorSerializer,
         "search": ItemDoctorSerializer,
         "edit_own_profile": EditDoctorProfileSerializer,
-        "get_all": ListDoctorSerializer
+        "get_all": ListDoctorSerializer,
+        "update": AdminEditDoctorSerializer
     }
 
     def create(self, request, *args, **kwargs):

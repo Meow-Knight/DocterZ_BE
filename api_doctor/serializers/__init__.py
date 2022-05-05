@@ -2,5 +2,5 @@ from .Hospital import HospitalSerializer, HospitalCUDSerializer, HospitalWithNam
 from .Clinic import ClinicSerializer, ClinicCUDSerializer, ClinicWithNameSerializer
 from .Department import DepartmentSerializer
 from .Doctor import DoctorSerializer, RegisterDoctorSerializer, GeneralInfoDoctorSerializer, \
-    EditDoctorProfileSerializer, ItemDoctorSerializer, ListDoctorSerializer
+    EditDoctorProfileSerializer, ItemDoctorSerializer, ListDoctorSerializer, AdminEditDoctorSerializer
 from .Review import ReviewSerializer, ShowReviewByDoctorSerializer

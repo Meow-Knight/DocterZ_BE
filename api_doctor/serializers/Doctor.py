@@ -3,21 +3,17 @@ from rest_framework import serializers
 
 from api_account.serializers import AccountSerializer, GeneralInfoAccountSerializer
 from api_account.services import AccountService
-from api_address.serializers import FullAddressSerializer
+from api_address.serializers import FullAddressSerializer, DeepWardSerializer
 from api_doctor.models.Doctor import Doctor
 from api_doctor.serializers import ClinicSerializer, ClinicCUDSerializer
 from api_doctor.serializers.Hospital import HospitalSerializer
 
 
 class DoctorSerializer(serializers.ModelSerializer):
-    ward = FullAddressSerializer(required=False)
+    ward = DeepWardSerializer()
+    address = FullAddressSerializer(required=False, source="ward")
     hospital = HospitalSerializer(required=False)
     clinic = ClinicSerializer(required=False)
-
-    def to_representation(self, instance):
-        data = super(DoctorSerializer, self).to_representation(instance)
-        data['address'] = data.pop('ward')
-        return data
 
     class Meta:
         model = Doctor
@@ -35,7 +31,7 @@ class ListDoctorSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
         fields = ['id', 'full_name', 'gender', 'email', 'full_address', 'hospital_name', 'department_name',
-                  'clinic_name', 'year_of_starting_work', 'username']
+                  'clinic_name', 'graduation_year', 'username']
 
     def get_full_address(self, instance):
         res = ""
@@ -88,6 +84,22 @@ class EditDoctorProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
         fields = '__all__'
+
+
+class AdminEditDoctorSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(max_length=30, source="account.username")
+
+    class Meta:
+        model = Doctor
+        fields = ['id', 'full_name', 'email', 'gender', 'graduation_year', 'detail_address', 'ward', 'hospital',
+                  'department', 'clinic', 'username']
+        
+    def update(self, instance, validated_data):
+        username = validated_data.pop('account').get('username')
+        if username:
+            instance.account.username = username
+            instance.account.save()
+        return super().update(instance, validated_data)
 
 
 class GeneralInfoDoctorSerializer(serializers.ModelSerializer):

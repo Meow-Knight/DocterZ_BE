@@ -21,7 +21,7 @@ class Doctor(TimeStampedModel):
     hospital = models.ForeignKey(Hospital, on_delete=models.SET_NULL, null=True, related_name="doctor")
     department = models.ForeignKey(Department, on_delete=models.SET_NULL, null=True, related_name="doctor")
     clinic = models.ForeignKey(Clinic, on_delete=models.SET_NULL, null=True, related_name="doctor")
-    year_of_starting_work = models.IntegerField(null=True, blank=True)
+    graduation_year = models.IntegerField(null=True, blank=True)
     account = models.ForeignKey(Account, on_delete=models.CASCADE)
 
     class Meta:
