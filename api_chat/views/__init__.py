@@ -1,0 +1,1 @@
+from .Chat import ChatViewSet
