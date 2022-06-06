@@ -14,6 +14,14 @@ class FullUserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ListUserSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source="account.username")
+
+    class Meta:
+        model = User
+        fields = ['id', 'name', 'phone', 'gender', 'insurance_id', 'username']
+
+
 class GeneralInfoUserSerializer(serializers.ModelSerializer):
     account = GeneralInfoAccountSerializer()
 

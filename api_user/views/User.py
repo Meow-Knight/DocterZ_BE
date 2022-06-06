@@ -4,12 +4,12 @@ from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 
-from api_account.permissions import UserPermission
+from api_account.permissions import UserPermission, AdminPermission
 from api_base.views import BaseViewSet
 from api_doctor.models import Doctor
 from api_doctor.serializers import DoctorSerializer
 from api_user.models import User
-from api_user.serializers.User import RegisterUserSerializer, EditUserSerializer
+from api_user.serializers.User import RegisterUserSerializer, EditUserSerializer, ListUserSerializer
 from api_user.services import UserService
 
 
@@ -19,11 +19,13 @@ class UserViewSet(BaseViewSet):
     permission_classes = [UserPermission]
     permission_map = {
         "login": [],
-        "signup": []
+        "signup": [],
+        "list": [AdminPermission],
     }
     serializer_map = {
         "edit_own_profile": EditUserSerializer,
         "detail_doctor": DoctorSerializer,
+        "list": ListUserSerializer
     }
 
     @action(detail=False, methods=['post'])
