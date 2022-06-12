@@ -15,10 +15,11 @@ class FullUserSerializer(serializers.ModelSerializer):
 
 
 class ListUserSerializer(serializers.ModelSerializer):
+    username = serializers.CharField(source="account.username")
 
     class Meta:
         model = User
-        fields = ['id', 'name', 'phone', 'gender', 'birthday', 'career']
+        fields = ['id', 'name', 'phone', 'gender', 'birthday', 'career', 'username']
 
 
 class GeneralInfoUserSerializer(serializers.ModelSerializer):
