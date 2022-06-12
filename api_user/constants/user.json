@@ -3,7 +3,7 @@
 		"name": "Nguyễn Mạnh Ðình",
 		"phone": "059684749",
 		"birthday": "2000-09-01",
-		"gender": "MALE",
+		"gender": "Nam",
 		"career": "Kỹ sư Công nghệ thông tin",
 		"insurance": 
 		{
@@ -22,7 +22,7 @@
 		"name": "Đỗ Gia Phúc",
 		"phone": "097856989",
 		"birthday": "2001-09-01",
-		"gender": "MALE",
+		"gender": "Nam",
 		"career": "Chuyên gia bất động sản",
 		"insurance": 
 		{
@@ -41,7 +41,7 @@
 		"name": "Lý Long Quân",
 		"phone": "078745778",
 		"birthday": "2003-11-01",
-		"gender": "MALE",
+		"gender": "Nam",
 		"career": "Giảng viên trường đại học Bách khoa Đà Nẵng",
 		"insurance": 
 		{
@@ -60,7 +60,7 @@
 		"name": "Ân Việt Dũng",
 		"phone": "099674567",
 		"birthday": "2000-06-12",
-		"gender": "MALE",
+		"gender": "Nam",
 		"career": "Nhân viên bán hàng tại cửa hàng giày ShoesShop",
 		"insurance": 
 		{
@@ -79,7 +79,7 @@
 		"name": "Hàn Việt Phương",
 		"phone": "027856889",
 		"birthday": "2006-09-19",
-		"gender": "FEMALE",
+		"gender": "Nữ",
 		"career": "Công nhân may mặc",
 		"insurance": 
 		{
@@ -98,7 +98,7 @@
 		"name": "Nguyễn Hùng Dũng",
 		"phone": "077848358",
 		"birthday": "1998-09-01",
-		"gender": "MALE",
+		"gender": "Nam",
 		"career": "Batender",
 		"insurance": 
 		{
@@ -117,7 +117,7 @@
 		"name": "Đặng Bảo Huỳnh",
 		"phone": "098832745",
 		"birthday": "2000-09-13",
-		"gender": "FEMALE",
+		"gender": "Nữ",
 		"career": "Người vận chuyển hàng container",
 		"insurance": 
 		{
@@ -136,7 +136,7 @@
 		"name": "Nguyễn Phương Triều",
 		"phone": "069834784",
 		"birthday": "2000-10-21",
-		"gender": "FEMALE",
+		"gender": "Nữ",
 		"career": "Kỹ sư cầu nối Việt-Nhật",
 		"insurance": 
 		{
@@ -155,7 +155,7 @@
 		"name": "Chung Quốc Hưng",
 		"phone": "090774577",
 		"birthday": "2004-09-18",
-		"gender": "MALE",
+		"gender": "Nam",
 		"career": "Đầu bếp tại khách sạn NovaTel",
 		"insurance": 
 		{
