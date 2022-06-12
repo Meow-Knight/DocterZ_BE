@@ -14,6 +14,13 @@ class FullUserSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
+class ListUserSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = User
+        fields = ['id', 'name', 'phone', 'gender', 'birthday', 'career']
+
+
 class GeneralInfoUserSerializer(serializers.ModelSerializer):
     account = GeneralInfoAccountSerializer()
 

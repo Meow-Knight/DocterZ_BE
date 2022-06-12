@@ -1,2 +1,3 @@
 from .Insurance import InsuranceSerializer
-from .User import RegisterUserSerializer, EditUserSerializer, GeneralInfoUserSerializer, ReviewerSerializer
+from .User import RegisterUserSerializer, EditUserSerializer, GeneralInfoUserSerializer, ReviewerSerializer, \
+    ListUserSerializer
