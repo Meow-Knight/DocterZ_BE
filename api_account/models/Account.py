@@ -13,7 +13,6 @@ class Account(AbstractBaseUser, TimeStampedModel):
     password = models.CharField(max_length=200)
     avatar = models.CharField(max_length=200, null=True, blank=True)
     role = models.ForeignKey(Role, on_delete=models.CASCADE)
-    is_active = models.BooleanField(default=True)
 
     USERNAME_FIELD = 'username'
 
