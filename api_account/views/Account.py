@@ -31,7 +31,7 @@ class AccountViewSet(BaseViewSet):
         if account.exists():
             account = account.first()
             if not account.is_activate:
-                return Response({"detail": "This account is deactivated"}, status=status.HTTP_400_BAD_REQUEST)
+                return Response({"details": "This account is deactivated"}, status=status.HTTP_400_BAD_REQUEST)
             if check_password(password, account.password):
                 response_data = AccountService.get_login_info(account)
                 return Response(response_data)

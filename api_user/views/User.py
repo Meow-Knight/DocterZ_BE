@@ -62,4 +62,4 @@ class UserViewSet(BaseViewSet):
             doctor = DoctorSerializer(doctor.first())
             return Response(doctor.data, status=status.HTTP_200_OK)
         else:
-            return Response({"detail": "doctor id không hợp lệ"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"details": "doctor id không hợp lệ"}, status=status.HTTP_400_BAD_REQUEST)

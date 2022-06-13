@@ -31,7 +31,7 @@ class AdminViewSet(BaseViewSet):
             user.account.save()
             user.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        return Response({"detail": "user id không hợp lệ"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"details": "user id không hợp lệ"}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=False, methods=['put'])
     def activate_user(self, request, *args, **kwargs):
@@ -44,7 +44,7 @@ class AdminViewSet(BaseViewSet):
             user.account.save()
             user.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        return Response({"detail": "user id không hợp lệ"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"details": "user id không hợp lệ"}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=True, methods=['put'])
     def deactivate_doctor(self, request, *args, **kwargs):
@@ -57,7 +57,7 @@ class AdminViewSet(BaseViewSet):
             doctor.account.save()
             doctor.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        return Response({"detail": "doctor id không hợp lệ"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"details": "doctor id không hợp lệ"}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(detail=False, methods=['put'])
     def activate_doctor(self, request, *args, **kwargs):
@@ -70,7 +70,7 @@ class AdminViewSet(BaseViewSet):
             doctor.account.save()
             doctor.save()
             return Response(status=status.HTTP_204_NO_CONTENT)
-        return Response({"detail": "doctor id không hợp lệ"}, status=status.HTTP_400_BAD_REQUEST)
+        return Response({"details": "doctor id không hợp lệ"}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(methods=['put'], detail=False)
     def edit_doctor_profile(self, request, *args, **kwargs):
@@ -85,4 +85,4 @@ class AdminViewSet(BaseViewSet):
                 res_data = DoctorSerializer(doctor)
                 return Response(res_data.data, status=status.HTTP_200_OK)
         else:
-            return Response({"detail": "doctor id không hợp lệ"}, status=status.HTTP_400_BAD_REQUEST)
+            return Response({"details": "doctor id không hợp lệ"}, status=status.HTTP_400_BAD_REQUEST)

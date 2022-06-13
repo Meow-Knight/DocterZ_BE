@@ -29,7 +29,7 @@ class BaseViewSet(viewsets.ModelViewSet):
             account.is_activate = False
             account.save()
         instance.save()
-        return Response({"detail": "deactivated"})
+        return Response({"details": "deactivated"})
 
     @action(detail=True, methods=['put'])
     def activate(self, request, *args, **kwargs):
@@ -40,4 +40,4 @@ class BaseViewSet(viewsets.ModelViewSet):
         if account:
             account.is_activate = True
             account.save()
-        return Response({"detail": "activated"})
+        return Response({"details": "activated"})
