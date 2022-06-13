@@ -18,7 +18,9 @@ class DoctorViewSet(BaseViewSet):
         "edit_own_profile": [DoctorPermission],
         "search": [],
         "get_all": [AdminPermission],
-        "update": [AdminPermission]
+        "update": [AdminPermission],
+        "deactivate": [AdminPermission],
+        "activate": [AdminPermission],
     }
     serializer_map = {
         "list": ListDoctorSerializer,

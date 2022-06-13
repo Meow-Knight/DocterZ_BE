@@ -21,6 +21,8 @@ class UserViewSet(BaseViewSet):
         "login": [],
         "signup": [],
         "list": [AdminPermission],
+        "deactivate": [AdminPermission],
+        "activate": [AdminPermission],
     }
     serializer_map = {
         "edit_own_profile": EditUserSerializer,
