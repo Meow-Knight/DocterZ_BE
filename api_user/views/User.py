@@ -20,6 +20,7 @@ class UserViewSet(BaseViewSet):
     permission_map = {
         "login": [],
         "signup": [],
+        "retrieve": [],
         "list": [AdminPermission],
         "deactivate": [AdminPermission],
         "activate": [AdminPermission],

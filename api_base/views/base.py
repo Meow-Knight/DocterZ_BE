@@ -23,13 +23,21 @@ class BaseViewSet(viewsets.ModelViewSet):
     @action(detail=True, methods=['put'])
     def deactivate(self, request, *args, **kwargs):
         instance = self.get_object()
-        instance.is_active = False
+        instance.is_activate = False
+        account = getattr(instance, 'account', None)
+        if account:
+            account.is_activate = False
+            account.save()
         instance.save()
         return Response({"detail": "deactivated"})
 
     @action(detail=True, methods=['put'])
     def activate(self, request, *args, **kwargs):
         instance = self.get_object()
-        instance.is_active = True
+        instance.is_activate = True
         instance.save()
+        account = getattr(instance, 'account', None)
+        if account:
+            account.is_activate = True
+            account.save()
         return Response({"detail": "activated"})
