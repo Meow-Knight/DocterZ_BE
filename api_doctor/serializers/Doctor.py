@@ -27,11 +27,12 @@ class ListDoctorSerializer(serializers.ModelSerializer):
     department_name = serializers.CharField(source='department.name')
     clinic_name = serializers.CharField(source='clinic.name')
     username = serializers.CharField(source='account.username')
+    is_activate = serializers.BooleanField(source='account.is_activate')
 
     class Meta:
         model = Doctor
         fields = ['id', 'full_name', 'gender', 'email', 'full_address', 'hospital_name', 'department_name',
-                  'clinic_name', 'graduation_year', 'username']
+                  'clinic_name', 'graduation_year', 'username', 'is_activate']
 
     def get_full_address(self, instance):
         res = ""
