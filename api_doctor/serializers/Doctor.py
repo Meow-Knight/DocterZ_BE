@@ -28,11 +28,12 @@ class ListDoctorSerializer(serializers.ModelSerializer):
     clinic_name = serializers.CharField(source='clinic.name')
     username = serializers.CharField(source='account.username')
     is_activate = serializers.BooleanField(source='account.is_activate')
+    avatar = serializers.CharField(source='account.avatar')
 
     class Meta:
         model = Doctor
-        fields = ['id', 'full_name', 'gender', 'email', 'full_address', 'hospital_name', 'department_name',
-                  'clinic_name', 'graduation_year', 'username', 'is_activate']
+        fields = ['id', 'full_name', 'phone',  'gender', 'email', 'birthday', 'full_address', 'hospital_name', 'department_name',
+                  'clinic_name', 'graduation_year', 'username', 'is_activate', 'avatar']
 
     def get_full_address(self, instance):
         res = ""
@@ -85,6 +86,12 @@ class EditDoctorProfileSerializer(serializers.ModelSerializer):
     class Meta:
         model = Doctor
         fields = '__all__'
+
+
+class EditOwnDoctorProfileSerializer(EditDoctorProfileSerializer):
+    class Meta:
+        model = Doctor
+        fields = ['full_name', 'gender', 'phone', 'email', 'birthday', 'graduation_year']
 
 
 class AdminEditDoctorSerializer(serializers.ModelSerializer):

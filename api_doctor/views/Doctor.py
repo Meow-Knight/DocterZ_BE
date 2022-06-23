@@ -1,11 +1,12 @@
 from rest_framework import status
 from rest_framework.decorators import action
 from rest_framework.response import Response
-from api_account.permissions import DoctorPermission, AdminPermission, DoctorOrAdminPermission
+
+from api_account.permissions import DoctorPermission, AdminPermission
 from api_base.views import BaseViewSet
 from api_doctor.models.Doctor import Doctor
-from api_doctor.serializers import DoctorSerializer, ItemDoctorSerializer, EditDoctorProfileSerializer, \
-    ListDoctorSerializer, AdminEditDoctorSerializer
+from api_doctor.serializers import DoctorSerializer, ItemDoctorSerializer, ListDoctorSerializer, \
+    AdminEditDoctorSerializer, EditOwnDoctorProfileSerializer
 from api_doctor.services import DoctorService
 
 
@@ -21,11 +22,12 @@ class DoctorViewSet(BaseViewSet):
         "update": [AdminPermission],
         "deactivate": [AdminPermission],
         "activate": [AdminPermission],
+        "get_own_profile": [DoctorPermission]
     }
     serializer_map = {
         "list": ListDoctorSerializer,
         "search": ItemDoctorSerializer,
-        "edit_own_profile": EditDoctorProfileSerializer,
+        "edit_own_profile": EditOwnDoctorProfileSerializer,
         "get_all": ListDoctorSerializer,
         "update": AdminEditDoctorSerializer
     }
@@ -33,6 +35,17 @@ class DoctorViewSet(BaseViewSet):
     def create(self, request, *args, **kwargs):
         response_data = DoctorService.signup(request)
         return Response(response_data, status=status.HTTP_201_CREATED)
+
+    @action(methods=['get'], detail=False)
+    def get_own_profile(self, request, *args, **kwargs):
+        account = request.user
+        doctor_qs = Doctor.objects.filter(account=account)
+        if doctor_qs.exists():
+            doctor = doctor_qs.first()
+            serializer = ListDoctorSerializer(doctor)
+            return Response(serializer.data)
+        else:
+            return Response({"details": "Dữ liệu account không hợp lệ với bất kỳ bác sĩ nào"}, status=status.HTTP_400_BAD_REQUEST)
 
     @action(methods=['put'], detail=False)
     def edit_own_profile(self, request, *args, **kwargs):
