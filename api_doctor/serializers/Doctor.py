@@ -112,10 +112,19 @@ class AdminEditDoctorSerializer(serializers.ModelSerializer):
 
 class GeneralInfoDoctorSerializer(serializers.ModelSerializer):
     account = GeneralInfoAccountSerializer()
+    full_address = serializers.SerializerMethodField()
+    hospital_name = serializers.CharField(source='hospital.name')
+    department_name = serializers.CharField(source='department.name')
+    clinic_name = serializers.CharField(source='clinic.name')
+    username = serializers.CharField(source='account.username')
+    is_activate = serializers.BooleanField(source='account.is_activate')
+    avatar = serializers.CharField(source='account.avatar')
 
     class Meta:
         model = Doctor
-        fields = '__all__'
+        fields = ['id', 'full_name', 'phone', 'gender', 'email', 'birthday', 'full_address', 'hospital_name',
+                  'department_name',
+                  'clinic_name', 'graduation_year', 'username', 'is_activate', 'avatar', 'account']
 
 
 class ItemDoctorSerializer(serializers.ModelSerializer):
