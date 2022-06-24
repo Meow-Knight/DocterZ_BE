@@ -67,7 +67,7 @@ class AccountService:
     @classmethod
     def get_info(cls, account):
         from api_user.serializers import GeneralInfoUserSerializer
-        from api_doctor.serializers import GeneralInfoDoctorSerializer
+        from api_doctor.serializers import ListDoctorSerializer
 
         role = account.role
         if role.id.hex == RoleData.USER.value.get('id'):
@@ -75,7 +75,7 @@ class AccountService:
             return GeneralInfoUserSerializer(user).data
         if role.id.hex == RoleData.DOCTOR.value.get('id'):
             doctor = Doctor.objects.get(account=account)
-            return GeneralInfoDoctorSerializer(doctor).data
+            return ListDoctorSerializer(doctor).data
         return {"account": GeneralInfoAccountSerializer(account).data}
 
     @classmethod
