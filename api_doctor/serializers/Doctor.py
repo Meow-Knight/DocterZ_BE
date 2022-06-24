@@ -1,4 +1,5 @@
 from django.db import transaction
+from django.db.models import Avg
 from rest_framework import serializers
 
 from api_account.serializers import AccountSerializer, GeneralInfoAccountSerializer
@@ -14,11 +15,18 @@ class DoctorSerializer(serializers.ModelSerializer):
     address = FullAddressSerializer(required=False, source="ward")
     hospital = HospitalSerializer(required=False)
     clinic = ClinicSerializer(required=False)
+    rating = serializers.FloatField(required=False)
 
     class Meta:
         model = Doctor
         fields = '__all__'
         depth = 1
+
+    def to_representation(self, instance):
+        data = super(DoctorSerializer, self).to_representation(instance)
+        x = instance.reviews.aggregate(review_avg=Avg('rate'))
+        data['rate'] = "{:.1f}".format(x['review_avg'])
+        return data
 
 
 class ListDoctorSerializer(serializers.ModelSerializer):
